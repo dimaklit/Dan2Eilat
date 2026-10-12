@@ -149,6 +149,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .mobile-view-toggle { display: none; }
 .share-dialog { background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 22px; width: min(440px, calc(100vw - 32px)); max-height: calc(100dvh - 40px); overflow: auto; direction: rtl; }
 .share-dialog::backdrop { background: #102b24a8; backdrop-filter: blur(4px); }
+.share-app-link { display: flex; align-items: center; justify-content: center; gap: 7px; margin: 0 0 14px; color: var(--accent); font-size: 12px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 .share-top { display: flex; align-items: center; justify-content: space-between; }
 .share-cover { text-align: center; padding: 23px 0 25px; border-bottom: 1px solid var(--border); background: radial-gradient(ellipse at top, #6d987b18, transparent 75%); }
 .share-cover h2 { margin: 15px 0 5px; font-size: 32px; font-weight: 800; }
@@ -166,30 +167,70 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 @media (max-width: 1100px) { .stats-bar { gap: 16px; padding: 20px; grid-template-columns: 1fr 1fr 1.2fr 1fr; } .share-button { grid-column: 1 / -1; justify-self: end; min-height: 32px; padding: 6px 12px; } .stat-item { gap: 8px; } .stat-item strong { font-size: 20px; } .header-center { display: none; } .workspace { grid-template-columns: 330px minmax(0, 1fr); } }
 @media (max-width: 700px) {
   .app { height: auto; min-height: 100dvh; }
-  .app-header { min-height: 72px; padding: 13px 18px; gap: 8px; }
-  .brand { gap: 10px; } .brand strong { font-size: 23px; } .brand small { font-size: 9px; } .trail-stripes { width: 24px; height: 33px; }
+  .app-header { min-height: 72px; padding: 12px 14px; gap: 8px; }
+  .brand { gap: 10px; } .brand strong { font-size: 23px; } .brand small { font-size: 11px; } .trail-stripes { width: 24px; height: 33px; }
   .local-badge { display: none; } .header-actions { gap: 0; }
-  .stats-bar { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 10px; padding: 14px 18px; }
+  .mobile-view-toggle { display: inline-flex; position: static; transform: none; min-width: 0; min-height: 40px; padding: 8px 10px; font-size: 13px; box-shadow: none; }
+  .stats-bar { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 10px; padding: 14px; }
   .progress-stat { grid-column: 1 / 3; padding-inline-end: 0; border: 0; }
   .progress-number { font-size: 24px; } .progress-track { margin-top: 6px; }
-  .stat-label { font-size: 10px; } .share-button { grid-column: 3; grid-row: 1; font-size: 10px; padding: 8px; min-height: 36px; gap: 5px; }
+  .stat-label { font-size: 12px; } .share-button { grid-column: 3; grid-row: 1; font-size: 12px; padding: 8px; min-height: 40px; gap: 5px; }
   .share-button svg { width: 14px; flex-shrink: 0; }
   .share-label-desktop { display: none; } .share-label-mobile { display: inline; }
-  .stat-item { gap: 0; } .stat-icon { display: none; } .stat-item strong { font-size: 16px; min-height: 25px; white-space: nowrap; } .stat-item div > span { font-size: 9px; } .stat-item strong small { font-size: 9px; }
-  .stat-item:nth-child(3) strong { font-size: 14px; }
-  .maplibregl-ctrl-attrib-inner { max-width: 230px; font-size: 9px; line-height: 14px; }
+  .stat-item { gap: 0; } .stat-icon { display: none; } .stat-item strong { font-size: 17px; min-height: 25px; white-space: nowrap; } .stat-item div > span { font-size: 11px; line-height: 1.35; } .stat-item strong small { font-size: 11px; }
+  .stat-item:nth-child(3) strong { font-size: 16px; }
+  .maplibregl-ctrl-attrib-inner { max-width: 230px; font-size: 10px; line-height: 15px; }
   .workspace { display: block; height: 100dvh; min-height: 500px; flex: none; overflow: visible; }
   .map-container { position: absolute; inset: 0; }
   .sidebar { position: absolute; inset: 0; visibility: hidden; border: 0; }
   .mobile-list-open .sidebar { visibility: visible; }
   .mobile-list-open .sidebar .detail-view { padding-bottom: 90px; }
   .mobile-list-open .sidebar-footer { padding-bottom: 75px; }
-  .mobile-view-toggle { display: inline-flex; position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 3; box-shadow: 0 4px 14px #0003; min-width: 120px; }
-  .map-title { top: 14px; right: 14px; padding: 8px 10px; font-size: 11px; }
-  .map-title-secondary { display: none; } .map-tools { top: 14px; left: 14px; } .map-credit { top: 57px; right: 14px; }
-  .map-legend { right: 12px; bottom: 86px; gap: 12px; padding: 8px 11px; }
-  .map-error { top: 92px; right: 12px; left: 60px; }
+  .map-title { top: 14px; right: 14px; padding: 8px 10px; font-size: 12px; }
+  .map-title-secondary { display: none; } .map-tools { top: 14px; left: 14px; } .map-credit { top: 57px; right: 14px; font-size: 11px; }
+  .map-legend { right: 12px; bottom: 30px; gap: 12px; padding: 8px 11px; }
+  .map-legend span { font-size: 11px; }
+  .map-error { top: 92px; right: 12px; left: 60px; font-size: 12px; }
   .sidebar-heading { padding: 20px 24px 15px; }
-  .storage-error { font-size: 10px; padding: 6px 12px; }
+  .sidebar-heading h2 { font-size: 22px; }
+  .sidebar-filters { padding-inline: 16px; }
+  .search-field input { font-size: 15px; }
+  .filter-tabs button { padding: 8px 6px; font-size: 13px; }
+  .region-filter { font-size: 13px; }
+  .region-filter select { font-size: 13px; }
+  .section-row { gap: 10px; padding: 15px 16px; }
+  .section-number { font-size: 14px; }
+  .row-region { font-size: 11px; }
+  .section-row-body strong { font-size: 15px; }
+  .row-metrics { font-size: 12px; }
+  .sidebar-footer p { font-size: 11px; }
+  .back-button { font-size: 13px; }
+  .difficulty { font-size: 12px; }
+  .detail-metrics { gap: 14px; font-size: 13px; }
+  .navigation-links a { font-size: 14px; }
+  .navigation-links small { font-size: 11px; }
+  .log-section h3 { font-size: 15px; }
+  .status-control button { font-size: 12px; }
+  .field-label { font-size: 12px; }
+  .log-section input:not([type=file]), .log-section textarea { font-size: 14px; }
+  .sync-button { font-size: 13px; }
+  .sync-button small { font-size: 11px; }
+  .storage-error { font-size: 12px; padding: 8px 12px; }
+  .empty-state h3 { font-size: 16px; }
+  .empty-state p { font-size: 13px; }
+  .share-dialog { padding: 18px; }
+  .share-cover p { font-size: 14px; }
+  .share-stat-grid strong { font-size: 26px; }
+  .share-stat-grid small { font-size: 14px; }
+  .share-stat-grid span { font-size: 12px; }
+  .share-sections { font-size: 14px; }
+  .share-note { font-size: 12px; }
+  .share-app-link { font-size: 14px; }
+  .share-dialog > .primary-button { font-size: 14px; min-height: 46px; }
+  .share-feedback { font-size: 12px; }
+}
+@media (max-width: 360px) {
+  .app-header { flex-wrap: wrap; }
+  .header-actions { flex: 1 0 100%; justify-content: flex-start; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }

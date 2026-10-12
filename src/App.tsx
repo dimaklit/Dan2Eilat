@@ -26,14 +26,13 @@ export default function App() {
   return <div dir="rtl" className={`app ${dark ? 'dark' : ''}`}>
     <header className="app-header"><a href="#" className="brand" onClick={event => event.preventDefault()} aria-label="השביל שלי"><span className="trail-stripes" /><span><strong>השביל שלי<span className="brand-dot">.</span></strong><small>יומן המסע שלך בשביל ישראל</small></span></a>
       <div className="header-center"><span className="live-dot" />הדרך מתחילה בצעד אחד</div>
-      <div className="header-actions"><span className="local-badge">נשמר במכשיר שלך</span><button className="icon-button" title={dark ? 'מצב בהיר' : 'מצב כהה'} aria-label={dark ? 'מצב בהיר' : 'מצב כהה'} onClick={toggleTheme}>{dark ? <Sun size={19} /> : <Moon size={19} />}</button></div>
+      <div className="header-actions"><span className="local-badge">נשמר במכשיר שלך</span><button className="mobile-view-toggle primary-button" onClick={() => setMobileList(!mobileList)}>{mobileList ? <MapIcon size={18} /> : <PanelRight size={18} />}{mobileList ? 'למפה' : 'למקטעים'}</button><button className="icon-button" title={dark ? 'מצב בהיר' : 'מצב כהה'} aria-label={dark ? 'מצב בהיר' : 'מצב כהה'} onClick={toggleTheme}>{dark ? <Sun size={19} /> : <Moon size={19} />}</button></div>
     </header>
     <HeaderStats logs={logs} onShare={() => setShareOpen(true)} />
     {error && <div className="storage-error" role="alert"><AlertCircle size={17} />{error}</div>}
     <main className={`workspace ${mobileList ? 'mobile-list-open' : ''}`}>
       <SectionSidebar selected={selected} logs={logs} onSelect={select} onUpdate={updateLog} />
       <div className="map-container"><TrailMap logs={logs} selectedId={selected?.id ?? null} onSelect={select} dark={dark} /></div>
-      <button className="mobile-view-toggle primary-button" onClick={() => setMobileList(!mobileList)}>{mobileList ? <MapIcon size={18} /> : <PanelRight size={18} />}{mobileList ? 'למפה' : 'למקטעים'}</button>
     </main>
     {shareOpen && <ShareModal logs={logs} onClose={() => setShareOpen(false)} />}
   </div>;
