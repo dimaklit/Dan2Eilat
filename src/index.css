@@ -17,8 +17,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .brand strong { display: block; font-size: 27px; line-height: 1.25; font-weight: 800; }
 .brand small { font-size: 11px; color: var(--muted); }
 .brand-dot { color: #ed732b; }
-.trail-stripes { display: inline-block; width: 29px; height: 39px; background: linear-gradient(90deg, #ed792f 0 33.33%, #fafafa 33.33% 66.66%, #428ba9 66.66%); border-radius: 3px; transform: rotate(-10deg); box-shadow: 0 2px 5px #00000013; flex-shrink: 0; }
+.trail-stripes { position: relative; display: inline-block; width: 29px; height: 39px; background: radial-gradient(ellipse at 30% 20%, #89948e 0 10%, transparent 48%), linear-gradient(145deg, #56635e, #263936 78%); clip-path: polygon(15% 3%, 78% 0, 100% 18%, 92% 37%, 98% 57%, 85% 77%, 81% 97%, 38% 92%, 14% 100%, 3% 78%, 10% 53%, 0 29%); transform: rotate(-6deg); filter: drop-shadow(0 2px 2px #0005); flex-shrink: 0; }
+.trail-stripes::before { content: ''; position: absolute; inset: 5px 7px; background: linear-gradient(90deg, #ed792f 0 31%, #20322f 31% 35%, #317fa2 35% 64%, #20322f 64% 68%, #f7f7ef 68% 100%); }
 .trail-stripes.small { width: 18px; height: 24px; }
+.trail-stripes.small::before { inset: 3px 4px; }
 .header-center { display: flex; align-items: center; gap: 9px; font-size: 12px; color: var(--muted); }
 .live-dot { width: 6px; height: 6px; background: #438b69; border-radius: 50%; display: inline-block; flex-shrink: 0; }
 .header-actions { display: flex; align-items: center; gap: 16px; }
