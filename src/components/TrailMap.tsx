@@ -29,10 +29,18 @@ export function TrailMap({ logs, selectedId, onSelect, dark }: Props) {
   const [viewZoom, setViewZoom] = useState(7.5);
   const [mapError, setMapError] = useState(false);
   const [activePhoto, setActivePhoto] = useState<{ photo: TrailPhoto; lat: number; lng: number } | null>(null);
+  const [isCompact, setIsCompact] = useState(() => window.matchMedia('(max-width: 700px)').matches);
   const data: FeatureCollection<LineString> = { type: 'FeatureCollection', features: intSections.flatMap(section => (section.routeSegments ?? [section.coordinates]).map(coordinates => ({
     type: 'Feature', properties: { id: section.id, status: logs[section.id]?.status ?? 'not_started' },
     geometry: { type: 'LineString', coordinates },
   }))) };
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 700px)');
+    const updateCompact = () => setIsCompact(media.matches);
+    media.addEventListener('change', updateCompact);
+    return () => media.removeEventListener('change', updateCompact);
+  }, []);
 
   function fitSection(section: TrailSection) {
     const lngs = section.coordinates.map(coordinate => coordinate[0]);
@@ -60,7 +68,7 @@ export function TrailMap({ logs, selectedId, onSelect, dark }: Props) {
   }
 
   return <div className={`map-surface ${dark ? 'map-dark' : ''}`}>
-    <Map ref={mapRef} initialViewState={{ longitude: 35.0, latitude: 31.5, zoom: 7.5 }} mapStyle={mapStyle}
+    <Map ref={mapRef} cooperativeGestures={isCompact} initialViewState={{ longitude: 35.0, latitude: 31.5, zoom: 7.5 }} mapStyle={mapStyle}
       terrain={terrain ? { source: 'terrain', exaggeration: 1.4 } : undefined}
       locale={{ 'NavigationControl.ZoomIn': 'הגדלה', 'NavigationControl.ZoomOut': 'הקטנה', 'NavigationControl.ResetBearing': 'איפוס כיוון לצפון', 'AttributionControl.ToggleAttribution': 'ייחוס מקורות המפה' }}
       interactiveLayerIds={['trail-hit']} onClick={select} onLoad={() => { const section = intSections.find(item => item.id === selectedId); if (section) fitSection(section); else showAll(); }} onError={() => setMapError(true)}

@@ -165,7 +165,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 @media (min-width: 1500px) { .workspace { grid-template-columns: 390px minmax(0, 1fr); } .stats-bar { gap: 50px; } }
 @media (max-width: 1100px) { .stats-bar { gap: 16px; padding: 20px; grid-template-columns: 1fr 1fr 1.2fr 1fr; } .share-button { grid-column: 1 / -1; justify-self: end; min-height: 32px; padding: 6px 12px; } .stat-item { gap: 8px; } .stat-item strong { font-size: 20px; } .header-center { display: none; } .workspace { grid-template-columns: 330px minmax(0, 1fr); } }
 @media (max-width: 700px) {
-  .app { min-height: 500px; }
+  .app { height: auto; min-height: 100dvh; }
   .app-header { min-height: 72px; padding: 13px 18px; gap: 8px; }
   .brand { gap: 10px; } .brand strong { font-size: 23px; } .brand small { font-size: 9px; } .trail-stripes { width: 24px; height: 33px; }
   .local-badge { display: none; } .header-actions { gap: 0; }
@@ -178,7 +178,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .stat-item { gap: 0; } .stat-icon { display: none; } .stat-item strong { font-size: 16px; min-height: 25px; white-space: nowrap; } .stat-item div > span { font-size: 9px; } .stat-item strong small { font-size: 9px; }
   .stat-item:nth-child(3) strong { font-size: 14px; }
   .maplibregl-ctrl-attrib-inner { max-width: 230px; font-size: 9px; line-height: 14px; }
-  .workspace { display: block; }
+  .workspace { display: block; height: 100dvh; min-height: 500px; flex: none; overflow: visible; }
   .map-container { position: absolute; inset: 0; }
   .sidebar { position: absolute; inset: 0; visibility: hidden; border: 0; }
   .mobile-list-open .sidebar { visibility: visible; }
