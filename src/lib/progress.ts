@@ -24,21 +24,39 @@ export function parseLogs(raw: string | null): ProgressLogs {
     if (typeof candidate.completedDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(candidate.completedDate)) log.completedDate = candidate.completedDate;
     log.gpxUploaded = candidate.gpxUploaded === true;
     if (Array.isArray(candidate.photos)) {
-      log.photos = candidate.photos.filter((photo): photo is NonNullable<SectionUserLog['photos']>[number] =>
-        photo && typeof photo.id === 'string' && typeof photo.url === 'string' && isPhotoUrl(photo.url)
-        && (photo.caption === undefined || typeof photo.caption === 'string')
+      log.photos = candidate.photos.filter((photo): photo is NonNullable<SectionUserLog['photos']>[number] => {
+        if (!photo || typeof photo.id !== 'string' || typeof photo.url !== 'string') return false;
+        const storagePath = typeof photo.storagePath === 'string'
+          && /^[0-9a-f-]{36}\/\d{1,2}\/[0-9a-f-]{36}\.(?:jpg|png|webp|gif)$/i.test(photo.storagePath);
+        if (!isPhotoUrl(photo.url) && !(storagePath && photo.url === '')) return false;
+        return (photo.caption === undefined || typeof photo.caption === 'string')
         && (photo.lat === undefined || (typeof photo.lat === 'number' && Number.isFinite(photo.lat) && Math.abs(photo.lat) <= 90))
-        && (photo.lng === undefined || (typeof photo.lng === 'number' && Number.isFinite(photo.lng) && Math.abs(photo.lng) <= 180))
-      ).slice(0, 6);
+        && (photo.lng === undefined || (typeof photo.lng === 'number' && Number.isFinite(photo.lng) && Math.abs(photo.lng) <= 180));
+      }).map(photo => {
+        const parsedPhoto: NonNullable<SectionUserLog['photos']>[number] = {
+          id: photo.id,
+          url: photo.url,
+        };
+        if (typeof photo.caption === 'string') parsedPhoto.caption = photo.caption;
+        if (typeof photo.lat === 'number') parsedPhoto.lat = photo.lat;
+        if (typeof photo.lng === 'number') parsedPhoto.lng = photo.lng;
+        if (typeof photo.storagePath === 'string') parsedPhoto.storagePath = photo.storagePath;
+        return parsedPhoto;
+      }).slice(0, 6);
     }
     logs[section.id] = log;
   }
   return logs;
 }
 
+export function mergeProgressLogs(localLogs: ProgressLogs, cloudLogs: ProgressLogs): ProgressLogs {
+  return { ...localLogs, ...cloudLogs };
+}
+
 export const localProgressRepository = {
   load(): ProgressLogs { return parseLogs(localStorage.getItem(STORAGE_KEY)); },
   save(logs: ProgressLogs): void { localStorage.setItem(STORAGE_KEY, JSON.stringify(logs)); },
+  clear(): void { localStorage.removeItem(STORAGE_KEY); },
 };
 
 export function calculateStats(logs: ProgressLogs) {

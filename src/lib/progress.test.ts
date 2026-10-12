@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { intSections } from '../data/intSections';
-import { calculateStats, isPhotoUrl, parseLogs } from './progress';
+import { calculateStats, isPhotoUrl, mergeProgressLogs, parseLogs } from './progress';
 
 describe('trail data', () => {
   it('uses unique section IDs and Israeli longitude/latitude coordinates', () => {
@@ -40,6 +40,17 @@ describe('progress', () => {
     const logs = { 1: { sectionId: 1, status: 'completed', completedDate: '2026-10-08', notes: 'מסע', photos: [{ id: 'photo', url: 'data:image/jpeg;base64,YQ==', lat: 33.25, lng: 35.7 }], gpxUploaded: true } };
     expect(parseLogs(JSON.stringify(logs))).toEqual(logs);
     expect(parseLogs(null)).toEqual({});
+  });
+  it('accepts owner-scoped private photo paths and rejects malformed paths', () => {
+    const storagePath = '123e4567-e89b-12d3-a456-426614174000/1/123e4567-e89b-12d3-a456-426614174001.jpg';
+    const photo = { id: 'photo', url: '', storagePath };
+    expect(parseLogs(JSON.stringify({ 1: { sectionId: 1, status: 'completed', photos: [photo] } }))[1].photos).toEqual([photo]);
+    expect(parseLogs(JSON.stringify({ 1: { sectionId: 1, status: 'completed', photos: [{ ...photo, storagePath: '../other-user/photo.jpg' }] } }))[1].photos).toEqual([]);
+  });
+  it('imports local-only sections but preserves existing account sections', () => {
+    const local = { 1: { sectionId: 1, status: 'completed' as const }, 2: { sectionId: 2, status: 'partial' as const } };
+    const cloud = { 1: { sectionId: 1, status: 'partial' as const } };
+    expect(mergeProgressLogs(local, cloud)).toEqual({ ...local, ...cloud });
   });
   it('rejects corrupt storage and unsafe photo URLs', () => {
     expect(() => parseLogs('{broken')).toThrow();

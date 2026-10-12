@@ -46,6 +46,29 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .secondary-button { background: var(--surface); border-color: var(--border); color: var(--text); }
 .secondary-button:hover { background: var(--subtle); }
 .share-label-mobile { display: none; }
+.account-button { min-height: 36px; padding: 7px 10px; gap: 7px; font-size: 11px; white-space: nowrap; }
+.auth-dialog { background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 22px; width: min(440px, calc(100vw - 32px)); max-height: calc(100dvh - 40px); overflow: auto; direction: rtl; }
+.auth-dialog::backdrop { background: #102b24a8; backdrop-filter: blur(4px); }
+.auth-dialog-top { display: flex; align-items: start; justify-content: space-between; gap: 16px; }
+.auth-dialog-top h2 { margin: 4px 0 0; font-size: 23px; }
+.auth-setup-message, .auth-help, .auth-status, .auth-message { color: var(--muted); font-size: 13px; line-height: 1.7; }
+.auth-setup-message { margin-top: 20px; padding: 12px; background: var(--subtle); border-radius: 6px; }
+.auth-setup-message p { margin: 0 0 9px; }
+.auth-setup-message p:last-child { margin-bottom: 0; }
+.auth-setup-message code { direction: ltr; unicode-bidi: isolate; font-size: 11px; }
+.auth-form { display: flex; flex-direction: column; gap: 11px; margin-top: 15px; }
+.auth-form label { font-size: 12px; font-weight: 600; }
+.auth-form input { min-height: 44px; border: 1px solid var(--border); border-radius: 5px; padding: 9px 11px; background: var(--surface); color: var(--text); font-size: 15px; }
+.auth-form .primary-button { min-height: 46px; margin-top: 4px; font-size: 14px; }
+.auth-account { margin-top: 15px; }
+.auth-email { display: flex; align-items: center; gap: 11px; padding: 12px; background: var(--subtle); border-radius: 6px; }
+.auth-email span:last-child { display: flex; flex-direction: column; min-width: 0; }
+.auth-email small { color: var(--muted); font-size: 11px; }
+.auth-email strong { overflow-wrap: anywhere; font-size: 14px; }
+.auth-avatar { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: #dcece1; color: #285e4f; flex-shrink: 0; }
+.auth-account .auth-help { margin: 10px 0 16px; }
+.auth-signout { display: inline-flex; align-items: center; gap: 7px; border: 0; padding: 7px 0; color: #a34d3f; background: transparent; font-size: 13px; }
+.auth-dialog .auth-message { margin: 12px 0 0; }
 .workspace { flex: 1; min-height: 0; display: grid; grid-template-columns: 365px minmax(0, 1fr); position: relative; overflow: hidden; }
 .sidebar { display: flex; flex-direction: column; min-height: 0; background: var(--surface); border-inline-end: 1px solid var(--border); z-index: 2; }
 .sidebar-heading { display: flex; align-items: center; justify-content: space-between; padding: 25px 24px 18px; }
@@ -172,6 +195,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .app-header { min-height: 72px; padding: 12px 14px; gap: 8px; }
   .brand { gap: 10px; } .brand strong { font-size: 23px; } .brand small { font-size: 11px; } .trail-stripes { width: 24px; height: 33px; }
   .local-badge { display: none; } .header-actions { gap: 0; }
+  .account-button { width: 38px; min-width: 38px; min-height: 40px; justify-content: center; padding: 8px; }
+  .account-label { display: none; }
   .mobile-view-toggle { display: inline-flex; position: static; transform: none; min-width: 0; min-height: 40px; padding: 8px 10px; font-size: 13px; box-shadow: none; }
   .stats-bar { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 10px; padding: 14px; }
   .progress-stat { grid-column: 1 / 3; padding-inline-end: 0; border: 0; }

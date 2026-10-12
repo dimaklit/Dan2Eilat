@@ -6,6 +6,7 @@ export interface TrailPhoto {
   caption?: string;
   lat?: number;
   lng?: number;
+  storagePath?: string;
 }
 
 export interface SectionUserLog {
