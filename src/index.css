@@ -85,8 +85,13 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .region-filter { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; font-size: 11px; color: var(--muted); }
 .region-filter select { border: none; background: var(--surface); color: var(--text); font-size: 11px; padding: 3px 7px; max-width: 160px; }
 .section-list { overflow-y: auto; flex: 1; min-height: 0; }
-.section-row { width: 100%; display: flex; text-align: start; align-items: center; gap: 13px; padding: 17px 23px; border: 0; border-bottom: 1px solid var(--border); background: transparent; color: var(--text); }
-.section-row:hover { background: var(--subtle); }
+.section-row { display: flex; align-items: stretch; gap: 6px; padding: 4px 12px; border-bottom: 1px solid var(--border); color: var(--text); }
+.section-row-main { flex: 1; min-width: 0; display: flex; text-align: start; align-items: center; gap: 13px; padding: 12px 6px; border: 0; border-radius: 5px; background: transparent; color: inherit; }
+.section-row-main:hover { background: var(--subtle); }
+.section-quick-complete { align-self: center; flex: 0 0 40px; width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); color: var(--muted); }
+.section-quick-complete:hover { background: #fff0e5; color: #c95b1a; border-color: #f5d8c2; }
+.section-quick-complete.is-complete { background: #ef792f; border-color: #ef792f; color: #fff; }
+.section-quick-complete.is-complete:hover { background: #d86520; }
 .section-number { border: 1px solid var(--border); border-radius: 7px; width: 36px; height: 40px; display: grid; place-items: center; color: var(--muted); font-size: 12px; font-weight: 500; flex-shrink: 0; }
 .completed .section-number { color: #cf5a17; background: #fff0e5; border-color: #f5d8c2; }
 .partial .section-number { color: #a66b0d; background: #fff6dc; border-color: #f5e1ad; }
@@ -225,7 +230,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
   .filter-tabs button { padding: 8px 6px; font-size: 13px; }
   .region-filter { font-size: 13px; }
   .region-filter select { font-size: 13px; }
-  .section-row { gap: 10px; padding: 15px 16px; }
+  .section-row { gap: 5px; padding: 4px 10px; }
+  .section-row-main { gap: 10px; padding: 12px 4px; }
+  .section-quick-complete { flex-basis: 44px; width: 44px; height: 44px; }
   .section-number { font-size: 14px; }
   .row-region { font-size: 11px; }
   .section-row-body strong { font-size: 15px; }

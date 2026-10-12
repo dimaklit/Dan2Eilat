@@ -93,7 +93,7 @@ export function SectionSidebar({ selected, logs, onSelect, onUpdate }: Props) {
     && (filter === 'all' || (filter === 'completed' ? logs[section.id]?.status === 'completed' : logs[section.id]?.status !== 'completed'))
     && section.nameHe.includes(query.trim()));
 
-  return <aside className={`sidebar ${selected ? 'has-selection' : ''}`} aria-label="מקטעי השביל">
+  return <aside className={`sidebar ${selected ? 'has-selection' : ''}`} aria-label="לוח המסע שלי">
     {selected ? <SectionDetails key={selected.id} section={selected} log={logs[selected.id] ?? { sectionId: selected.id, status: 'not_started' }} onBack={() => onSelect(null)} onUpdate={onUpdate} /> : <>
       <div className="sidebar-heading"><div><span className="eyebrow">המסע שלך, בקצב שלך</span><h2>מקטעי השביל<span>{intSections.length}</span></h2></div><Route size={23} /></div>
       <div className="sidebar-filters"><div className="search-field"><Search size={17} /><input aria-label="חיפוש מקטע" placeholder="לאן הולכים הפעם?" value={query} onChange={event => setQuery(event.target.value)} />{query && <button className="icon-button" title="ניקוי חיפוש" aria-label="ניקוי חיפוש" onClick={() => setQuery('')}><X size={15} /></button>}</div>
@@ -102,7 +102,16 @@ export function SectionSidebar({ selected, logs, onSelect, onUpdate }: Props) {
       </div>
       <div className="section-list">{visible.map(section => {
         const status = logs[section.id]?.status ?? 'not_started';
-        return <button className={`section-row ${status}`} key={section.id} onClick={() => onSelect(section)}><span className="section-number">{status === 'completed' ? <Check size={18} /> : String(section.id).padStart(2, '0')}</span><span className="section-row-body"><span className="row-region">{REGION_LABELS[section.region]} <span className={`status-dot ${status}`} /></span><strong>{section.startPoint.name} <span className="muted">עד</span> {section.endPoint.name}</strong><span className="row-metrics">{section.distanceKm} ק״מ <span>·</span> {section.elevationGainM} מ׳ טיפוס <span>·</span> {DIFFICULTY_LABELS[section.difficulty]}</span></span><ChevronLeft size={17} className="muted" /></button>;
+        return <div className={`section-row ${status}`} key={section.id}>
+          <button className="section-row-main" aria-label={`פרטי מקטע ${section.id}: ${section.nameHe}`} onClick={() => onSelect(section)}>
+            <span className="section-number">{status === 'completed' ? <Check size={18} /> : String(section.id).padStart(2, '0')}</span>
+            <span className="section-row-body"><span className="row-region">{REGION_LABELS[section.region]} <span className={`status-dot ${status}`} /></span><strong>{section.startPoint.name} <span className="muted">עד</span> {section.endPoint.name}</strong><span className="row-metrics">{section.distanceKm} ק״מ <span>·</span> {section.elevationGainM} מ׳ טיפוס <span>·</span> {DIFFICULTY_LABELS[section.difficulty]}</span></span>
+            <ChevronLeft size={17} className="muted" />
+          </button>
+          <button className={`section-quick-complete ${status === 'completed' ? 'is-complete' : ''}`} aria-label={status === 'completed' ? `ביטול השלמת מקטע ${section.id}` : `סימון מקטע ${section.id} כהושלם`} aria-pressed={status === 'completed'} title={status === 'completed' ? 'ביטול השלמה' : 'סימון כהושלם'} onClick={() => onUpdate(section.id, { status: status === 'completed' ? 'not_started' : 'completed' })}>
+            <Check size={18} />
+          </button>
+        </div>;
       })}{visible.length === 0 && <div className="empty-state"><Route size={30} /><h3>אין מקטעים בתצוגה הזו</h3><p>נסו לשנות את החיפוש או הסינון.</p><button className="secondary-button" onClick={() => { setQuery(''); setRegion('all'); setFilter('all'); }}>ניקוי מסננים</button></div>}</div>
       <div className="sidebar-footer"><span className="trail-stripes small" /><p>{DATA_NOTICE}</p></div>
     </>}
