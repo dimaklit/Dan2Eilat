@@ -80,9 +80,11 @@ export function TrailMap({ logs, selectedId, onSelect, dark }: Props) {
         <Layer id="trail-outline" type="line" layout={{ 'line-cap': 'round', 'line-join': 'round' }} paint={{ 'line-color': '#203c34', 'line-width': 16, 'line-opacity': 0.92 }} />
         <Layer id="trail-glow" type="line" filter={['==', ['get', 'status'], 'completed']} paint={{ 'line-color': '#f97316', 'line-width': 19, 'line-opacity': 0.38, 'line-blur': 1.5 }} />
         <Layer id="trail-partial-glow" type="line" filter={['==', ['get', 'status'], 'partial']} paint={{ 'line-color': '#f2a51a', 'line-width': 18, 'line-opacity': 0.34, 'line-blur': 1.5 }} />
-        <Layer id="trail-orange-band" type="line" layout={{ 'line-cap': 'round', 'line-join': 'round' }} paint={{ 'line-color': '#f97316', 'line-width': 4, 'line-offset': -4.5 }} />
-        <Layer id="trail-blue-band" type="line" layout={{ 'line-cap': 'round', 'line-join': 'round' }} paint={{ 'line-color': '#287da0', 'line-width': 4, 'line-offset': 0 }} />
-        <Layer id="trail-white-band" type="line" layout={{ 'line-cap': 'round', 'line-join': 'round' }} paint={{ 'line-color': '#fffdf5', 'line-width': 4, 'line-offset': 4.5 }} />
+        <Layer id="trail-orange-band" type="line" filter={['!=', ['get', 'status'], 'completed']} layout={{ 'line-cap': 'round', 'line-join': 'round' }} paint={{ 'line-color': '#f97316', 'line-width': 4, 'line-offset': -4.5 }} />
+        <Layer id="trail-blue-band" type="line" filter={['!=', ['get', 'status'], 'completed']} layout={{ 'line-cap': 'round', 'line-join': 'round' }} paint={{ 'line-color': '#287da0', 'line-width': 4, 'line-offset': 0 }} />
+        <Layer id="trail-white-band" type="line" filter={['!=', ['get', 'status'], 'completed']} layout={{ 'line-cap': 'round', 'line-join': 'round' }} paint={{ 'line-color': '#fffdf5', 'line-width': 4, 'line-offset': 4.5 }} />
+        <Layer id="trail-completed-casing" type="line" filter={['==', ['get', 'status'], 'completed']} layout={{ 'line-cap': 'round', 'line-join': 'round' }} paint={{ 'line-color': '#fffdf5', 'line-width': 11 }} />
+        <Layer id="trail-completed" type="line" filter={['==', ['get', 'status'], 'completed']} layout={{ 'line-cap': 'round', 'line-join': 'round' }} paint={{ 'line-color': '#f97316', 'line-width': 7 }} />
         <Layer id="trail-selected" type="line" filter={['==', ['get', 'id'], selectedId ?? -1]} paint={{ 'line-color': '#e4d84e', 'line-width': 2, 'line-opacity': 0.9 }} />
         <Layer id="trail-hit" type="line" paint={{ 'line-width': 20, 'line-opacity': 0 }} />
       </Source>
